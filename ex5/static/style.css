@@ -1,0 +1,120 @@
+body{
+font-family: Arial;
+background:#0f172a;
+color:white;
+margin:0;
+text-align:center;
+}
+
+.title{
+margin-top:40px;
+font-size:36px;
+}
+
+/* DASHBOARD */
+
+.dashboard{
+display:flex;
+justify-content:center;
+gap:60px;
+margin-top:120px;
+}
+
+.card{
+background:#1e293b;
+padding:40px;
+width:250px;
+border-radius:12px;
+text-decoration:none;
+color:white;
+transition:0.3s;
+box-shadow:0 0 15px rgba(0,0,0,0.4);
+}
+
+.card:hover{
+transform:scale(1.05);
+background:#2563eb;
+}
+
+.card h2{
+margin-bottom:10px;
+}
+
+/* MAIN CONTAINER */
+
+.container{
+display:flex;
+justify-content:center;
+gap:50px;
+margin-top:50px;
+}
+
+/* INPUT PANEL */
+
+.inputBox{
+background:#1e293b;
+padding:30px;
+border-radius:10px;
+width:280px;
+}
+
+/* INPUT FIELDS */
+
+input{
+width:90%;
+padding:8px;
+margin:8px 0;
+border-radius:6px;
+border:none;
+}
+
+/* BUTTON */
+
+button{
+padding:10px 20px;
+border:none;
+border-radius:6px;
+background:#22c55e;
+color:white;
+cursor:pointer;
+margin-top:10px;
+}
+
+button:hover{
+background:#16a34a;
+}
+
+/* OUTPUT PANEL */
+
+.outputBox{
+background:#1e293b;
+padding:20px;
+border-radius:10px;
+width:700px;
+height:500px;
+display:flex;
+flex-direction:column;
+}
+
+/* CONSOLE */
+
+#console{
+background:black;
+color:#22c55e;
+padding:15px;
+margin-top:10px;
+height:420px;
+overflow-y:auto;
+text-align:left;
+font-family:monospace;
+font-size:14px;
+}
+
+/* BACK BUTTON */
+
+.back{
+display:block;
+margin-top:30px;
+color:white;
+text-decoration:none;
+}

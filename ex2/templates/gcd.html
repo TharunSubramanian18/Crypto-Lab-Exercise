@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>GCD</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+<div class="card">
+    <h2>Euclidean Algorithm</h2>
+
+    <input type="number" id="a" placeholder="Enter A">
+    <input type="number" id="b" placeholder="Enter B">
+    <button onclick="findGCD()">Find GCD</button>
+
+    <pre id="result"></pre>
+
+    <a href="/" class="back">⬅ Back to Dashboard</a>
+</div>
+
+<script>
+async function findGCD(){
+    let a = document.getElementById("a").value;
+    let b = document.getElementById("b").value;
+
+    let res = await fetch('/calculate-gcd', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({a, b})
+    });
+
+    let data = await res.json();
+    let text = "";
+    data.steps.forEach(s => text += s + "\n");
+    document.getElementById("result").innerText = text;
+}
+</script>
+</body>
+</html>

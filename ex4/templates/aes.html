@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<title>AES Visualizer</title>
+
+<style>
+
+body{
+background:linear-gradient(135deg,#1f1c2c,#928dab);
+font-family:Segoe UI;
+margin:0;
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+}
+
+.container{
+width:1200px;
+height:90vh;
+display:grid;
+grid-template-columns:35% 65%;
+gap:20px;
+background:rgba(255,255,255,0.1);
+backdrop-filter:blur(15px);
+border-radius:20px;
+padding:25px;
+color:white;
+}
+
+input{
+width:100%;
+padding:10px;
+border:none;
+border-radius:8px;
+margin-top:5px;
+margin-bottom:15px;
+}
+
+button{
+padding:12px;
+border:none;
+border-radius:10px;
+background:#ff758c;
+color:white;
+font-weight:bold;
+cursor:pointer;
+width:100%;
+}
+
+.console{
+background:black;
+padding:15px;
+border-radius:15px;
+height:75vh;
+overflow-y:scroll;
+white-space:pre-wrap;
+font-family:Consolas;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<div>
+
+<h2>AES Encryption Visualizer</h2>
+
+<form method="POST">
+
+<label>Plaintext</label>
+<input name="plaintext" placeholder="Enter plaintext">
+
+<label>Key</label>
+<input name="key" placeholder="Enter key">
+
+<label>Rounds</label>
+<input name="rounds" type="number" placeholder="Enter rounds">
+
+<button type="submit">Run AES</button>
+
+</form>
+
+</div>
+
+<div>
+
+<h3>Execution Console</h3>
+
+<div class="console" id="console">
+{{ console if console else "" }}
+</div>
+
+</div>
+
+</div>
+
+<script>
+let consoleBox = document.getElementById("console");
+consoleBox.scrollTop = consoleBox.scrollHeight;
+</script>
+
+</body>
+</html>

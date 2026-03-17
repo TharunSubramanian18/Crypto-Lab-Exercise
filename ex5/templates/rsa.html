@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>RSA Algorithm</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<h1 class="title">RSA Key Generation</h1>
+
+<div class="container">
+
+<div class="inputBox">
+
+<h3>RSA Encryption</h3>
+
+<label>Enter Plaintext</label>
+<input type="text" id="plaintext" placeholder="Enter number">
+
+<button onclick="generateRSA()">Generate Keys & Encrypt</button>
+
+</div>
+
+<div class="outputBox">
+
+<h3>Console Output</h3>
+
+<div id="console"></div>
+
+</div>
+
+</div>
+
+<a class="back" href="/">⬅ Back</a>
+
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+
+</body>
+</html>

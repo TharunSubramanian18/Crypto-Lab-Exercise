@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>S-DES Visualizer (8-bit Block)</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', sans-serif;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+    width: 1400px;
+    max-width: 95%;
+    height: 92vh;
+    background: rgba(255,255,255,0.15);
+    backdrop-filter: blur(20px);
+    border-radius: 20px;
+    padding: 25px;
+    display: grid;
+    grid-template-columns: 45% 55%;
+    gap: 25px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+    color: white;
+    overflow: hidden;   
+}
+
+        h2 {
+            grid-column: span 2;
+            text-align: center;
+            margin: 0 0 15px 0;
+            font-weight: 600;
+        }
+
+.left-panel {
+    overflow-y: auto;
+    padding-right: 10px;
+}
+
+.right-panel {
+    display: flex;
+    flex-direction: column;
+    min-height: 0;   /* IMPORTANT FIX */
+}
+
+        label {
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            margin-bottom: 12px;
+            border-radius: 8px;
+            border: none;
+            font-size: 14px;
+            outline: none;
+            transition: 0.3s;
+        }
+
+        input:focus, textarea:focus {
+            box-shadow: 0 0 0 2px #fff;
+        }
+
+        textarea {
+            resize: none;
+            height: 55px;
+        }
+
+        h3 {
+            margin-top: 18px;
+            font-size: 15px;
+            border-bottom: 1px solid rgba(255,255,255,0.4);
+            padding-bottom: 4px;
+        }
+
+        table {
+            border-collapse: collapse;
+            margin-bottom: 15px;
+        }
+
+        table td {
+            padding: 4px;
+        }
+
+        table input {
+            width: 45px;
+            text-align: center;
+            border-radius: 6px;
+        }
+
+        button {
+            padding: 12px;
+            border: none;
+            border-radius: 10px;
+            background: linear-gradient(135deg, #ff7eb3, #ff758c);
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 15px;
+            transition: 0.3s;
+            width: 100%;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+        }
+
+      #result {
+    flex: 1;
+    min-height: 0;   /* CRITICAL FIX */
+    background: rgba(0,0,0,0.45);
+    border-radius: 15px;
+    padding: 18px;
+    overflow-y: auto;   /* Scroll stays here */
+    white-space: pre-wrap;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+        @media(max-width: 1000px) {
+            .container {
+                grid-template-columns: 1fr;
+                height: auto;
+            }
+
+            h2 {
+                grid-column: span 1;
+            }
+        }
+
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+    <h2>S-DES Step-By-Step Visualizer</h2>
+
+    <!-- LEFT COLUMN -->
+    <div class="left-panel">
+
+        <label>Plaintext (8 bits)</label>
+        <input id="pt" value="10101010">
+
+        <label>Key (10 bits)</label>
+        <input id="key" value="1010000010">
+
+        <h3>P10 (10 values)</h3>
+        <textarea id="p10">3,5,2,7,4,10,1,9,8,6</textarea>
+
+        <h3>P8 (8 values)</h3>
+        <textarea id="p8">6,3,7,4,8,5,10,9</textarea>
+
+        <h3>IP (8 values)</h3>
+        <textarea id="ip">2,6,3,1,4,8,5,7</textarea>
+
+        <h3>IP Inverse (8 values)</h3>
+        <textarea id="ipinv">4,1,3,5,7,2,8,6</textarea>
+
+        <h3>Expansion Table E (8 values)</h3>
+        <textarea id="e">4,1,2,3,2,3,4,1</textarea>
+
+        <h3>P Table (4 values)</h3>
+        <textarea id="p">2,4,3,1</textarea>
+
+        <h3>S-BOX 1 (4 x 4)</h3>
+        <table id="s1"></table>
+
+        <h3>S-BOX 2 (4 x 4)</h3>
+        <table id="s2"></table>
+
+        <button onclick="runDES()">Run S-DES</button>
+    </div>
+
+    <!-- RIGHT COLUMN -->
+    <div class="right-panel">
+        <h3>Execution Result</h3>
+        <pre id="result"></pre>
+    </div>
+</div>
+
+<script>
+function createSBox(id){
+    let table = document.getElementById(id);
+    for(let r=0;r<4;r++){
+        let row = table.insertRow();
+        for(let c=0;c<4;c++){
+            let cell = row.insertCell();
+            cell.innerHTML = `<input type="number" min="0" max="3" value="${(r+c)%4}">`;
+        }
+    }
+}
+createSBox("s1");
+createSBox("s2");
+
+function readSBox(id){
+    let table = document.getElementById(id);
+    let box = [];
+    for(let r=0;r<4;r++){
+        let row = [];
+        for(let c=0;c<4;c++){
+            row.push(parseInt(table.rows[r].cells[c].firstChild.value));
+        }
+        box.push(row);
+    }
+    return box;
+}
+
+function parseArray(text){
+    return text.split(',').map(x=>parseInt(x.trim()));
+}
+
+async function runDES(){
+    let pt = document.getElementById("pt").value;
+    let key = document.getElementById("key").value;
+
+    let p10 = parseArray(document.getElementById("p10").value);
+    let p8 = parseArray(document.getElementById("p8").value);
+
+    let ip = parseArray(document.getElementById("ip").value);
+    let ipinv = parseArray(document.getElementById("ipinv").value);
+    let e = parseArray(document.getElementById("e").value);
+    let p = parseArray(document.getElementById("p").value);
+
+    let s1 = readSBox("s1");
+    let s2 = readSBox("s2");
+
+    let res = await fetch('/run-des',{
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({
+            plaintext:pt,
+            key:key,
+            p10:p10,
+            p8:p8,
+            ip:ip,
+            ipinv:ipinv,
+            e:e,
+            p:p,
+            sboxes:[s1,s2]
+        })
+    });
+
+    let data = await res.json();
+    document.getElementById("result").innerText = data.steps.join("\n");
+}
+</script>
+
+</body>
+</html>

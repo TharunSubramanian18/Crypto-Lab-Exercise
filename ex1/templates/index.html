@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CipherMatrix Pro</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+<div class="layout">
+    <div class="panel">
+        <h1>CipherMatrix</h1>
+
+        <div class="radio-tabs">
+            <label><input type="radio" name="algo" value="caesar" checked> Caesar</label>
+            <label><input type="radio" name="algo" value="playfair"> Playfair</label>
+            <label><input type="radio" name="algo" value="hill"> Hill</label>
+        </div>
+
+        <textarea id="inp" placeholder="Enter message..."></textarea>
+
+        <input id="key" placeholder="Key / Shift / Matrix">
+
+        <div class="btn-group">
+            <button onclick="run(true)">ENCRYPT</button>
+            <button onclick="run(false)">DECRYPT</button>
+        </div>
+
+        <textarea id="out" readonly></textarea>
+    </div>
+
+    <div class="panel">
+        <pre id="steps"></pre>
+    </div>
+</div>
+
+<script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>

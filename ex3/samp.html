@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Library Management System - Discover Your Next Read</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    body {
+      font-family: 'Poppins', sans-serif;
+      line-height: 1.7;
+      overflow-x: hidden;
+      background: linear-gradient(135deg, #0f0f23 0%, #2d1b69 50%, #ba181b 100%);
+    }
+
+    /* Navbar */
+    .navbar {
+      background: rgba(255,255,255,0.95) !important;
+      backdrop-filter: blur(20px);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+      padding: 1rem 0;
+    }
+    .navbar-brand {
+      font-weight: 800 !important;
+      font-size: 1.8rem !important;
+      background: linear-gradient(45deg, #ba181b, #e94560);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* Hero Section */
+    #hero {
+      height: 100vh;
+      background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), 
+                  url('https://images.unsplash.com/photo-1507842217343-583bb7278b66?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80') center/cover;
+      display: flex;
+      align-items: center;
+      position: relative;
+    }
+    #hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #f9ca24, #f0932b);
+      opacity: 0.1;
+      animation: gradientShift 15s ease infinite;
+    }
+    @keyframes gradientShift {
+      0%, 100% { transform: rotate(0deg); }
+      50% { transform: rotate(180deg); }
+    }
+    .hero-title {
+      font-size: clamp(3rem, 8vw, 6rem);
+      font-weight: 800;
+      text-shadow: 3px 3px 10px rgba(0,0,0,0.5);
+      animation: glow 2s ease-in-out infinite alternate;
+    }
+    @keyframes glow {
+      from { text-shadow: 0 0 20px #fff, 0 0 30px #ff6b6b, 0 0 40px #ff6b6b; }
+      to { text-shadow: 0 0 20px #fff, 0 0 30px #4ecdc4, 0 0 40px #4ecdc4; }
+    }
+    .search-form { max-width: 600px; margin: 0 auto; }
+
+    /* Stats Cards */
+    .stat-card {
+      background: rgba(255,255,255,0.1);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 20px;
+      padding: 2rem;
+      text-align: center;
+      color: white;
+      transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      position: relative;
+      overflow: hidden;
+    }
+    .stat-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+      transition: left 0.7s;
+    }
+    .stat-card:hover::before { left: 100%; }
+    .stat-card:hover {
+      transform: translateY(-20px) scale(1.05);
+      box-shadow: 0 30px 60px rgba(0,0,0,0.3);
+    }
+    .stat-number {
+      font-size: 3.5rem;
+      font-weight: 800;
+      background: linear-gradient(45deg, #fff, #f0f0f0);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* Collection Showcase */
+    .collection-item {
+      position: relative;
+      height: 400px;
+      border-radius: 25px;
+      overflow: hidden;
+      margin-bottom: 2rem;
+      transition: all 0.6s ease;
+    }
+    .collection-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s ease;
+    }
+    .collection-item:hover img { transform: scale(1.1); }
+    .collection-overlay {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: linear-gradient(transparent, rgba(0,0,0,0.9));
+      color: white;
+      padding: 2rem;
+      transform: translateY(100%);
+      transition: transform 0.6s ease;
+    }
+    .collection-item:hover .collection-overlay { transform: translateY(0); }
+
+    /* Features */
+    .feature-card {
+      background: rgba(255,255,255,0.95);
+      border-radius: 25px;
+      padding: 3rem 2rem;
+      text-align: center;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+      transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      border: none;
+      position: relative;
+    }
+    .feature-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 5px;
+      background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1);
+    }
+    .feature-card:hover {
+      transform: translateY(-15px);
+      box-shadow: 0 40px 80px rgba(0,0,0,0.2);
+    }
+    .feature-icon {
+      width: 100px;
+      height: 100px;
+      background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1.5rem;
+      font-size: 2.5rem;
+      color: white;
+      box-shadow: 0 15px 35px rgba(255,107,107,0.4);
+    }
+
+    /* Book Grid */
+    .book-card {
+      background: white;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+      transition: all 0.4s ease;
+      height: 100%;
+    }
+    .book-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 25px 50px rgba(0,0,0,0.2);
+    }
+    .available { background: linear-gradient(45deg, #4ecdc4, #44a08d); }
+    .borrowed { background: linear-gradient(45deg, #ff6b6b, #ee5a52); }
+
+    /* Footer */
+    footer {
+      background: rgba(15,15,35,0.95);
+      backdrop-filter: blur(20px);
+      border-top: 1px solid rgba(255,255,255,0.1);
+    }
+    .footer-link:hover { color: #4ecdc4 !important; }
+
+    /* Animations */
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-20px); }
+    }
+    .floating { animation: float 6s ease-in-out infinite; }
+
+    @media (max-width: 768px) {
+      .hero-title { font-size: 2.5rem !important; }
+      .search-form { width: 95% !important; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Enhanced Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-light fixed-top">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="#hero">
+        <i class="fas fa-book-open me-2"></i>Library Management System
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link px-3" href="#books"><i class="fas fa-list me-1"></i>Books</a></li>
+          <li class="nav-item"><a class="nav-link px-3" href="#dashboard"><i class="fas fa-tachometer-alt me-1"></i>Dashboard</a></li>
+          <li class="nav-item"><a class="nav-link px-3" href="#contact"><i class="fas fa-envelope me-1"></i>Contact</a></li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle px-3" href="#" role="button" data-bs-toggle="dropdown">
+              <i class="fas fa-user me-1"></i>Account
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end">
+              <li><a class="dropdown-item" href="#login-modal" data-bs-toggle="modal"><i class="fas fa-sign-in-alt me-2"></i>Login</a></li>
+              <li><a class="dropdown-item" href="#register-modal" data-bs-toggle="modal"><i class="fas fa-user-plus me-2"></i>Register</a></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section id="hero" class="d-flex align-items-center text-white">
+    <div class="container text-center" data-aos="zoom-in">
+      <h1 class="hero-title mb-4 display-1 fw-bold">Discover Infinite Worlds</h1>
+      <p class="lead fs-3 mb-5 px-3">50,000+ books • 24/7 Access • Modern Library Experience</p>
+      <form action="/search" method="GET" class="search-form">
+        <div class="input-group input-group-lg">
+          <input type="text" class="form-control border-0 py-3 px-4" name="query" placeholder="Search 50,000+ books by title, author, genre..." style="border-radius: 50px 0 0 50px !important;">
+          <button type="submit" class="btn btn-warning btn-lg px-5" style="border-radius: 0 50px 50px 0 !important;">
+            <i class="fas fa-search me-2"></i>Find Books
+          </button>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <!-- Incredible Stats -->
+  <section class="py-5 bg-dark">
+    <div class="container">
+      <div class="row g-4 text-center">
+        <div class="col-lg-3 col-md-6" data-aos="fade-up">
+          <div class="stat-card">
+            <div class="stat-number">50K+</div>
+            <h4>Books Collection</h4>
+            <p>From classics to cutting-edge tech literature</p>
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="100">
+          <div class="stat-card">
+            <div class="stat-number">10K+</div>
+            <h4>Active Members</h4>
+            <p>Students, professionals, lifelong learners</p>
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="200">
+          <div class="stat-card">
+            <div class="stat-number">99.9%</div>
+            <h4>Uptime</h4>
+            <p>Always available when you need us</p>
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="300">
+          <div class="stat-card">
+            <div class="stat-number">24/7</div>
+            <h4>Digital Access</h4>
+            <p>Borrow anytime, anywhere</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured Collections -->
+  <section class="py-5" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+    <div class="container">
+      <h2 class="text-white text-center display-4 fw-bold mb-5" data-aos="fade-down">Our Featured Collections</h2>
+      <div class="row g-4">
+        <div class="col-lg-4 col-md-6" data-aos="zoom-in">
+          <div class="collection-item">
+            <img src="https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=500" alt="Technology">
+            <div class="collection-overlay">
+              <h3>Technology Hub</h3>
+              <p>15,000+ titles in AI, Data Science, Programming, Blockchain, and CS fundamentals</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4 col-md-6" data-aos="zoom-in" data-aos-delay="100">
+          <div class="collection-item">
+            <img src="https://images.unsplash.com/photo-1544947950-fa07a98d237f?w=500" alt="Fiction">
+            <div class="collection-overlay">
+              <h3>Fiction Worlds</h3>
+              <p>12,000+ novels, thrillers, fantasy epics, and contemporary bestsellers</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4 col-md-6" data-aos="zoom-in" data-aos-delay="200">
+          <div class="collection-item">
+            <img src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=500" alt="Academic">
+            <div class="collection-overlay">
+              <h3>Academic Excellence</h3>
+              <p>8,000+ textbooks, research papers, and competitive exam resources</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Services -->
+  <section id="features" class="py-5 bg-white">
+    <div class="container">
+      <h2 class="text-center display-5 fw-bold mb-5" data-aos="fade-up">Why Choose Our Library?</h2>
+      <div class="row g-4">
+        <div class="col-lg-4 col-md-6" data-aos="fade-up">
+          <div class="feature-card h-100">
+            <div class="feature-icon"><i class="fas fa-bolt"></i></div>
+            <h4>Lightning Search</h4>
+            <p>Find any book in under 2 seconds across our 50,000+ collection with smart filters and recommendations.</p>
+          </div>
+        </div>
+        <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
+          <div class="feature-card h-100">
+            <div class="feature-icon"><i class="fas fa-mobile-alt"></i></div>
+            <h4>Mobile-First</h4>
+            <p>Borrow books from anywhere on any device with our fully responsive design and offline reading support.</p>
+          </div>
+        </div>
+        <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
+          <div class="feature-card h-100">
+            <div class="feature-icon"><i class="fas fa-shield-alt"></i></div>
+            <h4>Secure & Private</h4>
+            <p>Your reading history stays yours with enterprise-grade encryption and GDPR-compliant privacy protection.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sample Books (Static) -->
+  <section id="books" class="py-5 bg-light">
+    <div class="container">
+      <div class="row mb-5 align-items-center">
+        <div class="col-lg-6" data-aos="fade-right">
+          <h2 class="display-5 fw-bold">Featured Books</h2>
+          <p class="lead">Handpicked recommendations from our collection</p>
+        </div>
+        <div class="col-lg-6 text-lg-end" data-aos="fade-left">
+          <a href="/search" class="btn btn-outline-primary btn-lg px-4">View All Books</a>
+        </div>
+      </div>
+      <div class="row g-4">
+        <div class="col-xl-3 col-lg-4 col-md-6" data-aos="fade-up">
+          <div class="book-card h-100">
+            <img src="https://images.unsplash.com/photo-1544947950-fa07a98d237f?w=300" class="card-img-top" alt="Clean Code">
+            <div class="card-body p-4">
+              <h5 class="card-title fw-bold">Clean Code</h5>
+              <p class="text-muted mb-2">Robert C. Martin</p>
+              <span class="badge available fs-6 mb-3 px-3 py-2">Available Now</span>
+              <a href="/borrow/1" class="btn btn-primary w-100">Reserve</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-3 col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
+          <div class="book-card h-100">
+            <img src="https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=300" class="card-img-top" alt="Sapiens">
+            <div class="card-body p-4">
+              <h5 class="card-title fw-bold">Sapiens</h5>
+              <p class="text-muted mb-2">Yuval Noah Harari</p>
+              <span class="badge borrowed fs-6 mb-3 px-3 py-2">10 Waiting</span>
+              <a href="/reserve/2" class="btn btn-outline-primary w-100">Join Waitlist</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Dashboard & Contact sections remain same as previous -->
+  <!-- [Previous dashboard and contact sections here - omitted for brevity] -->
+  
+  <!-- Login/Register Modals (same as before) -->
+  <!-- [Previous modal code here - omitted for brevity] -->
+
+  <!-- Footer -->
+  <footer class="py-5 text-white">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-3 col-md-6 mb-4">
+          <h5 class="fw-bold mb-3">Library Management System</h5>
+          <p>Transforming how you discover, borrow, and engage with knowledge through cutting-edge technology.</p>
+        </div>
+        <div class="col-lg-3 col-md-6 mb-4">
+          <h6 class="fw-bold mb-3">Quick Links</h6>
+          <ul class="list-unstyled">
+            <li><a href="#hero" class="footer-link">Home</a></li>
+            <li><a href="#features" class="footer-link">About</a></li>
+            <li><a href="#books" class="footer-link">Books</a></li>
+            <li><a href="#dashboard" class="footer-link">Dashboard</a></li>
+          </ul>
+        </div>
+        <div class="col-lg-3 col-md-6 mb-4">
+          <h6 class="fw-bold mb-3">Services</h6>
+          <ul class="list-unstyled">
+            <li><a href="#" class="footer-link">Book Search</a></li>
+            <li><a href="#" class="footer-link">Member Portal</a></li>
+            <li><a href="#" class="footer-link">Digital Library</a></li>
+          </ul>
+        </div>
+        <div class="col-lg-3 col-md-6 mb-4">
+          <h6 class="fw-bold mb-3">Connect</h6>
+          <div class="d-flex gap-3">
+            <a href="#" class="text-white-50"><i class="fab fa-facebook fa-2x"></i></a>
+            <a href="#" class="text-white-50"><i class="fab fa-twitter fa-2x"></i></a>
+            <a href="#" class="text-white-50"><i class="fab fa-instagram fa-2x"></i></a>
+          </div>
+        </div>
+      </div>
+      <hr class="my-4 opacity-25">
+      <div class="text-center">
+        <p class="mb-0 opacity-75">© 2026 Library Management System. All rights reserved. | Built with ❤️ for readers.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+  <script>
+    AOS.init({ duration: 1200, once: true });
+    
+    // Smooth scrolling
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+          behavior: 'smooth'
+        });
+      });
+    });
+
+    // Navbar scroll effect
+    window.addEventListener('scroll', () => {
+      const navbar = document.querySelector('.navbar');
+      if (window.scrollY > 100) {
+        navbar.style.background = 'rgba(255,255,255,0.98)';
+      } else {
+        navbar.style.background = 'rgba(255,255,255,0.95)';
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Primitive Root Finder</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <style>
+        /* Scrollable result box */
+        #steps {
+            height: 400px;
+            overflow-y: scroll;
+            background: #f4f4f4;
+            padding: 10px;
+            border-radius: 5px;
+            white-space: pre-wrap;
+        }
+    </style>
+</head>
+<body>
+
+<div class="card">
+    <h2>Primitive Root Finder</h2>
+
+    <input type="number" id="p" placeholder="Enter prime number p">
+    <button onclick="checkRoot()">Find Primitive Roots</button>
+
+    <pre id="steps"></pre>
+
+    <a href="/" class="back">⬅ Back to Dashboard</a>
+</div>
+
+<script>
+async function checkRoot(){
+    let p = document.getElementById("p").value;
+
+    let res = await fetch('/check-primitive', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({p})
+    });
+
+    let data = await res.json();
+    let text = "";
+    let primitiveRoots = [];
+
+    data.results.forEach(r => {
+        text += "====================================\n";
+        text += `Checking g = ${r.g}\n`;
+        text += "------------------------------------\n";
+
+        r.steps.forEach(s => text += s + "\n");
+
+        if (r.is_root) {
+            text += "This is a Primitive Root\n\n";
+            primitiveRoots.push(r.g);
+        } else {
+            text += "Not a Primitive Root\n\n";
+        }
+    });
+
+    text += "\n\n******** FINAL PRIMITIVE ROOTS ********\n";
+    text += primitiveRoots.join(", ");
+
+    document.getElementById("steps").innerText = text;
+}
+</script>
+
+</body>
+</html>
