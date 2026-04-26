@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}CMAC-AES128 — CryptoLab{% endblock %}
+{% block content %}
+<h1>CMAC-AES128 <span>— Cipher-based MAC, AES-128 key</span></h1>
+
+<div class="form-row">
+    <label>AES-128 Key &nbsp;<span style="color:#444">(32 hex characters = 128 bits)</span></label>
+    <div style="display:flex;gap:8px">
+        <input type="text" id="key" placeholder="2b7e151628aed2a6abf7158809cf4f3c" maxlength="32" style="flex:1">
+        <button id="btn-gen">Random</button>
+    </div>
+</div>
+<div class="form-row">
+    <label>Input Message</label>
+    <textarea id="msg" rows="3" placeholder="Enter string to authenticate..."></textarea>
+</div>
+<div class="btn-row">
+    <button id="btn-run">Run CMAC</button>
+    <button id="btn-clear">Clear</button>
+</div>
+<div class="status" id="status"></div>
+
+<div class="console-wrapper" id="console-wrap">
+    <div class="console-bar">
+        <span id="console-title">output</span>
+        <button onclick="copyConsole()">copy</button>
+    </div>
+    <div class="console-out" id="console"></div>
+</div>
+{% endblock %}
+{% block scripts %}<script src="/static/js/cmac.js"></script>{% endblock %}

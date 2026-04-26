@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}SHA-512 — CryptoLab{% endblock %}
+{% block content %}
+<h1>SHA-512 <span>— Secure Hash Algorithm, 512-bit output</span></h1>
+
+<div class="form-row">
+    <label>Input Message</label>
+    <textarea id="msg" rows="3" placeholder="Enter string to hash..."></textarea>
+</div>
+<div class="btn-row">
+    <button id="btn-run">Run SHA-512</button>
+    <button id="btn-clear">Clear</button>
+</div>
+<div class="status" id="status"></div>
+
+<div class="console-wrapper" id="console-wrap">
+    <div class="console-bar">
+        <span id="console-title">output</span>
+        <button onclick="copyConsole()">copy</button>
+    </div>
+    <div class="console-out" id="console"></div>
+</div>
+{% endblock %}
+{% block scripts %}<script src="/static/js/sha512.js"></script>{% endblock %}

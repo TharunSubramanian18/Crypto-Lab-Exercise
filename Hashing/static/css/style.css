@@ -1,0 +1,97 @@
+/* CryptoLab — Simple Terminal Style */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    background: #1a1a1a;
+    color: #d0d0d0;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 14px;
+    min-height: 100vh;
+}
+
+nav {
+    background: #111;
+    border-bottom: 1px solid #333;
+    padding: 8px 20px;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+}
+nav .brand { color: #aaa; font-size: 13px; font-weight: bold; letter-spacing: 1px; }
+nav a {
+    color: #888; text-decoration: none; font-size: 13px;
+    padding: 3px 8px; border: 1px solid transparent; border-radius: 3px;
+}
+nav a:hover { color: #ccc; border-color: #444; }
+nav a.active { color: #fff; border-color: #555; background: #2a2a2a; }
+
+.page { max-width: 900px; margin: 0 auto; padding: 24px 20px; }
+
+h1 {
+    font-size: 15px; color: #ccc; font-weight: normal;
+    border-bottom: 1px solid #333; padding-bottom: 8px;
+    margin-bottom: 20px; letter-spacing: 1px;
+}
+h1 span { color: #555; font-size: 12px; margin-left: 10px; }
+
+.form-row { margin-bottom: 12px; }
+label { display: block; color: #777; font-size: 12px; margin-bottom: 4px; }
+
+textarea, input[type="text"] {
+    width: 100%; background: #111; border: 1px solid #333;
+    color: #d0d0d0; font-family: 'Courier New', Courier, monospace;
+    font-size: 13px; padding: 7px 10px; border-radius: 2px;
+    outline: none; resize: vertical;
+}
+textarea:focus, input[type="text"]:focus { border-color: #555; }
+
+.btn-row { display: flex; gap: 10px; align-items: center; margin-top: 10px; }
+button {
+    background: #222; border: 1px solid #444; color: #bbb;
+    font-family: 'Courier New', Courier, monospace; font-size: 13px;
+    padding: 6px 16px; cursor: pointer; border-radius: 2px;
+}
+button:hover { background: #2a2a2a; border-color: #555; color: #ddd; }
+
+.console-wrapper { margin-top: 20px; border: 1px solid #2e2e2e; border-radius: 2px; }
+.console-bar {
+    background: #1e1e1e; border-bottom: 1px solid #2e2e2e;
+    padding: 5px 12px; display: flex; justify-content: space-between; align-items: center;
+}
+.console-bar span { color: #555; font-size: 12px; }
+.console-bar button { font-size: 11px; padding: 2px 8px; color: #555; background: #161616; border-color: #2e2e2e; }
+.console-bar button:hover { color: #999; }
+
+.console-out {
+    background: #0e0e0e; color: #b8b8b8;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 13px; padding: 12px 14px;
+    height: 540px; overflow-y: auto;
+    white-space: pre-wrap; word-break: break-all; line-height: 1.65;
+}
+.console-out::-webkit-scrollbar { width: 5px; }
+.console-out::-webkit-scrollbar-track { background: #111; }
+.console-out::-webkit-scrollbar-thumb { background: #2e2e2e; }
+
+.c-sec  { color: #6a8faf; }
+.c-key  { color: #999; }
+.c-val  { color: #c5c5c5; }
+.c-res  { color: #7eaa7e; font-weight: bold; }
+.c-warn { color: #c8a84a; }
+.c-sep  { color: #2e2e2e; }
+.c-dim  { color: #4a4a4a; }
+
+.status { font-size: 12px; color: #555; margin-top: 6px; min-height: 16px; }
+.status.err { color: #a05050; }
+
+.home-box { margin-top: 30px; }
+.home-box p { color: #666; font-size: 13px; margin-bottom: 18px; line-height: 1.7; }
+.algo-links { display: flex; gap: 12px; }
+.algo-links a {
+    padding: 10px 18px; background: #111; border: 1px solid #2e2e2e;
+    color: #aaa; text-decoration: none; border-radius: 2px; font-size: 13px;
+}
+.algo-links a:hover { border-color: #444; color: #ddd; background: #161616; }
+.algo-links a small { display: block; color: #444; font-size: 11px; margin-top: 2px; }
+
+.hidden { display: none !important; }

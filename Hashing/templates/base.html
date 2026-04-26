@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}CryptoLab{% endblock %}</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+<nav>
+    <span class="brand">CRYPTOLAB</span>
+    <a href="/" {% if request.path == '/' %}class="active"{% endif %}>Home</a>
+    <a href="/sha512" {% if request.path == '/sha512' %}class="active"{% endif %}>SHA-512</a>
+    <a href="/cmac" {% if request.path == '/cmac' %}class="active"{% endif %}>CMAC-AES128</a>
+    <a href="/md5" {% if request.path == '/md5' %}class="active"{% endif %}>MD5</a>
+</nav>
+<div class="page">
+    {% block content %}{% endblock %}
+</div>
+<script src="/static/js/main.js"></script>
+{% block scripts %}{% endblock %}
+</body>
+</html>

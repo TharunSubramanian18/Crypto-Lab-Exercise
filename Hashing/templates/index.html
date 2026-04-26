@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}CryptoLab{% endblock %}
+{% block content %}
+<h1>CryptoLab <span>— cryptographic algorithms, step by step</span></h1>
+<div class="home-box">
+    <p>
+        Implementations of SHA-512, CMAC-AES128, and MD5 built entirely from scratch
+        (no hashlib, no cryptography library). All intermediate steps are printed
+        to a terminal-style console for inspection.
+    </p>
+    <div class="algo-links">
+        <a href="/sha512">SHA-512<small>512-bit hash · 80 rounds</small></a>
+        <a href="/cmac">CMAC-AES128<small>CBC-MAC · AES-128 subkeys</small></a>
+        <a href="/md5">MD5<small>128-bit hash · 64 rounds</small></a>
+    </div>
+</div>
+{% endblock %}
